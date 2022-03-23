@@ -1,4 +1,4 @@
-console.log('Segunda entrega del proyecto final');
+console.log('Desafio Complementario - Optimizando simulador de pedidos de repostería');
 
 let arrProducts = [
     {id: 1, name: 'Torta'},
@@ -66,31 +66,19 @@ function validateProducts() {
     } else {
         switch (choiceProduct) {
             case 'Torta':
-                if (dessertFlavor == 'Chocolate') {
-                    let cookingRecipe = '3 Huevos 250g Azúcar 1/2 Taza Aceite De Maíz 158ml Leche 1 Cucharadita Vainilla 180g harina 60g Cacao En Polvo 2 Cucharaditas Polvo Para Hornear 1 Pizca Sal';
+                    const chocolateFlavor = dessertFlavor == 'Chocolate' ? '60g Cacao En Polvo' : '';
+                    let cookingRecipe = '3 Huevos 250g Azúcar 1/2 Taza Aceite De Maíz 158ml Leche 1 Cucharadita Vainilla 180g harina 2 Cucharaditas Polvo Para Hornear 1 Pizca Sal ' + chocolateFlavor;
                     orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, cookingRecipe);
-                } else {
-                    let cookingRecipe = '3 Huevos 250g Azúcar 1/2 Taza Aceite De Maíz 158ml Leche 1 Cucharadita Vainilla 180g harina 2 Cucharaditas Polvo Para Hornear 1 Pizca Sal';
-                    orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, cookingRecipe);
-                }
                 break;
             case 'Cupcake':
-                if (dessertFlavor == 'Chocolate') {
-                    let cookingRecipec = '1 Leche Condensada 1/4 Taza Aceite De Maíz 400g Harina Leudante 2 Huevos 60g Cacao En Polvo';
+                    const chocolateFlavorc = dessertFlavor == 'Chocolate' ? '60g Cacao En Polvo' : '';
+                    let cookingRecipec = '1 Leche Condensada 1/4 Taza Aceite De Maíz 400g Harina Leudante 2 Huevos ' + chocolateFlavorc;
                     orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, cookingRecipec);
-                } else {
-                    let cookingRecipec = '1 Leche Condensada 1/4 Taza Aceite De Maíz 400g Harina Leudante 2 Huevos';
-                    orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, cookingRecipec);
-                }
                 break;
             case 'Galletas':
-                if (dessertFlavor == 'Chocolate') {
-                    let cookingRecipeg = '225gManteca Blanda 225g Azúcar 1/2 Leche Condensada 350g Harina Leudante 150g Chocolate';
+                const chocolateFlavorg = dessertFlavor == 'Chocolate' ? '150g Chocolate' : '';
+                    let cookingRecipeg = '225gManteca Blanda 225g Azúcar 1/2 Leche Condensada 350g Harina Leudante ' + chocolateFlavorg;
                     orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, cookingRecipeg);
-                } else {
-                    let cookingRecipeg = '225gManteca Blanda 225g Azúcar 1/2 Leche Condensada 350g Harina Leudante';
-                    orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, cookingRecipeg);
-                }
                 break;
             default:
                 alert('El producto no se encuentra disponible');
@@ -102,24 +90,27 @@ function validateProducts() {
 
 function orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, recipe) {
     let text = '';
-    let order = [];
     let time = (quantity * 2) + 1;
-
+    
     if (choiceProduct != 'Torta'){
         text = 'docena de';
     }
 
-    order.push(new Products(choiceProduct, quantity, dessertFlavor, toppings, time, recipe, name, phone, email));
+    const arrOrder = JSON.parse(sessionStorage.getItem('order')) || [];
+
+    arrOrder.push(new Products(choiceProduct, quantity, dessertFlavor, toppings, time, recipe, name, phone, email));
     let orderJson = (clave, valor) => sessionStorage.setItem(clave, valor);
-    orderJson('order', JSON.stringify(order[0]));    
+    orderJson('order', JSON.stringify(arrOrder));
     
-    order.forEach((arr) => {        
+    let num = arrOrder[arrOrder.length -1]
         alert(`*** Pedido generado ***
-        \nA nombre de: ${name} 
+        \nA nombre de: ${num.customerName} 
         \n--- Pedido ---
-        \n${arr.quantity} ${text} ${arr.productName} de ${arr.flavor} con ${arr.toppings}
-        \nEl pedido sera entregado dentro de ${arr.deliveryTime} dias`);
-    })    
+        \n${num.quantity} ${text} ${num.productName} de ${num.flavor} con ${num.toppings}
+        \nEl pedido sera entregado dentro de ${num.deliveryTime} dias`);
+     
+    
+    console.log(...arrOrder);
 }
 
 order();
