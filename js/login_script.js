@@ -1,4 +1,4 @@
-console.log('Desafio Complementario - Optimizando simulador de pedidos de repostería');
+console.log('Desafio Entregable - Incorporando librerias al simulador de pedidos de repostería');
 
 class Users {
     constructor(userName, password) {
@@ -26,7 +26,11 @@ function validateUser(event) {
 
     if (validateUser.userName != name || validateUser.password != pass) {
         event.preventDefault();
-        alert('Datos de acceso incorrectos. Verificar usuario por defecto');      
+        Swal.fire({
+            icon: 'error',
+            title: 'Datos de acceso incorrectos',
+            text: 'Verificar usuario por defecto'
+        })  
     }
 }
 

@@ -1,4 +1,4 @@
-console.log('Desafio Complementario - Optimizando simulador de pedidos de repostería');
+console.log('Desafio Entregable - Incorporando librerias al simulador de pedidos de repostería');
 
 let arrProducts = [
     {id: 1, name: 'Torta'},
@@ -61,7 +61,11 @@ function validateProducts() {
     let toppings = document.getElementById('toppings').value;
 
     if (name == '' || email == '' || phone == '' || dessertFlavor == '' || quantity == '' || toppings == '') {
-        alert('Pedido rechazado. \nSe necesita ingresar los datos solicitados correctamente');
+        Swal.fire({
+            icon: 'error',
+            title: 'Pedido rechazado',
+            text: 'Se necesita ingresar los datos solicitados correctamente'
+        })
         order();
     } else {
         switch (choiceProduct) {
@@ -81,7 +85,10 @@ function validateProducts() {
                     orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, cookingRecipeg);
                 break;
             default:
-                alert('El producto no se encuentra disponible');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'El producto no se encuentra disponible'
+                })
                 order();
                 break;
         }
@@ -103,14 +110,13 @@ function orderDescription(name, email, phone, choiceProduct, dessertFlavor, quan
     orderJson('order', JSON.stringify(arrOrder));
     
     let num = arrOrder[arrOrder.length -1]
-        alert(`*** Pedido generado ***
-        \nA nombre de: ${num.customerName} 
-        \n--- Pedido ---
-        \n${num.quantity} ${text} ${num.productName} de ${num.flavor} con ${num.toppings}
-        \nEl pedido sera entregado dentro de ${num.deliveryTime} dias`);
-     
-    
-    console.log(...arrOrder);
+      Swal.fire({
+        icon: 'success',
+        html: `<h1>Pedido generado</h1>
+        <p>A nombre de: ${num.customerName}</p>
+        <p>${num.quantity} ${text} ${num.productName} de ${num.flavor} con ${num.toppings}</p>
+        <p>El pedido sera entregado dentro de ${num.deliveryTime} dias</p>`,
+    });   
 }
 
 order();
