@@ -1,0 +1,16 @@
+[{
+		"id": 1,
+		"name": "Torta",
+		"cookingRecipe": "3 Huevos 250g Azúcar 1/2 Taza Aceite De Maíz 158ml Leche 1 Cucharadita Vainilla 180g harina 2 Cucharaditas Polvo Para Hornear 1 Pizca Sal"
+	},
+	{
+		"id": 2,
+		"name": "Cupcake",
+		"cookingRecipe": "1 Leche Condensada 1/4 Taza Aceite De Maíz 400g Harina Leudante 2 Huevos"
+	},
+	{
+		"id": 3,
+		"name": "Galletas",
+		"cookingRecipe": "225g Manteca Blanda 225g Azúcar 1/2 Leche Condensada 350g Harina Leudante"
+	}
+]

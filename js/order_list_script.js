@@ -1,4 +1,4 @@
-console.log('Desafio Entregable - Incorporando librerias al simulador de pedidos de repostería');
+console.log('Desafio Entregable - Fecth en el simulador de pedidos de repostería');
 
 let pendingOrders = JSON.parse(sessionStorage.getItem('order')).length; 
 Toastify({
@@ -43,8 +43,8 @@ function orderList() {
                                         <li>Telefono: ${orderList[i].customerPhone}</li>
                                         <li>Email: ${orderList[i].customerEmail}</li>
                                     </ul>
-                                    </section>
-                                </div>`;         
+                                </section>
+                            </div>`;         
     }
 }
 

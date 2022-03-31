@@ -1,10 +1,6 @@
-console.log('Desafio Entregable - Incorporando librerias al simulador de pedidos de repostería');
+console.log('Desafio Entregable - Fecth en el simulador de pedidos de repostería');
 
-let arrProducts = [
-    {id: 1, name: 'Torta'},
-    {id: 2, name: 'Cupcake'},
-    {id: 3, name: 'Galletas'},
-];
+const URL = './data/data.json';
 
 class Products {
     constructor(productName, quantity, flavor, toppings, deliveryTime, cookingRecipe, customerName, customerPhone, customerEmail) {
@@ -31,16 +27,24 @@ function selectChoice(event) {
     event.preventDefault();
     let dessert = event.target.parentNode;
 
-    let find = arrProducts.find(product => product.id == dessert.id);
-    let choiceProduct = find.name;
+    fetch(URL)
+    .then( response => response.json() )
+    .then( data => {
+        data.forEach( product => {
+            if (product.id == dessert.id) {                
+                let choiceProduct = product.name;
+                let chosenDessert = document.getElementById('sweet');
+                let display = document.createElement("div");
+                validateElement();
+                display.innerHTML = `<input type="text" class="email-bt" name="choiceProduct" id="choiceProduct" value="${choiceProduct}" readonly>`;
+                chosenDessert.appendChild(display);
+                localStorage.setItem('recipe', product.cookingRecipe);
 
-    let chosenDessert = document.getElementById('sweet');
-    let display = document.createElement("div");
-    validateElement();
-    display.innerHTML = `<input type="text" class="email-bt" name="choiceProduct" id="choiceProduct" value="${choiceProduct}" readonly>`;
-    chosenDessert.appendChild(display);
-    let button = document.querySelector('#submit');
-    button.addEventListener('click', validateProducts);
+                let button = document.querySelector('#submit');
+                button.addEventListener('click', validateProducts);
+            }
+        })    
+    })   
 }
 
 function validateElement() {
@@ -59,6 +63,7 @@ function validateProducts() {
     let dessertFlavor = document.getElementById('dessertFlavor').value;
     let quantity = document.getElementById('quantity').value;
     let toppings = document.getElementById('toppings').value;
+    let storageRecipe = localStorage.getItem('recipe');
 
     if (name == '' || email == '' || phone == '' || dessertFlavor == '' || quantity == '' || toppings == '') {
         Swal.fire({
@@ -70,18 +75,18 @@ function validateProducts() {
     } else {
         switch (choiceProduct) {
             case 'Torta':
-                    const chocolateFlavor = dessertFlavor == 'Chocolate' ? '60g Cacao En Polvo' : '';
-                    let cookingRecipe = '3 Huevos 250g Azúcar 1/2 Taza Aceite De Maíz 158ml Leche 1 Cucharadita Vainilla 180g harina 2 Cucharaditas Polvo Para Hornear 1 Pizca Sal ' + chocolateFlavor;
+                    const chocolateFlavor = dessertFlavor == 'Chocolate' ? ' 60g Cacao En Polvo' : '';
+                    let cookingRecipe = storageRecipe + chocolateFlavor;
                     orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, cookingRecipe);
                 break;
             case 'Cupcake':
-                    const chocolateFlavorc = dessertFlavor == 'Chocolate' ? '60g Cacao En Polvo' : '';
-                    let cookingRecipec = '1 Leche Condensada 1/4 Taza Aceite De Maíz 400g Harina Leudante 2 Huevos ' + chocolateFlavorc;
+                    const chocolateFlavorc = dessertFlavor == 'Chocolate' ? ' 60g Cacao En Polvo' : '';
+                    let cookingRecipec = storageRecipe + chocolateFlavorc;
                     orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, cookingRecipec);
                 break;
             case 'Galletas':
-                const chocolateFlavorg = dessertFlavor == 'Chocolate' ? '150g Chocolate' : '';
-                    let cookingRecipeg = '225gManteca Blanda 225g Azúcar 1/2 Leche Condensada 350g Harina Leudante ' + chocolateFlavorg;
+                const chocolateFlavorg = dessertFlavor == 'Chocolate' ? ' 150g Chocolate' : '';
+                    let cookingRecipeg = storageRecipe + chocolateFlavorg;
                     orderDescription(name, email, phone, choiceProduct, dessertFlavor, quantity, toppings, cookingRecipeg);
                 break;
             default:
