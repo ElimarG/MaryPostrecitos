@@ -1,4 +1,4 @@
-console.log('Desafio Entregable - Fecth en el simulador de pedidos de repostería');
+console.log('Proyecto Final - Simulador de pedidos de repostería');
 
 const URL = './data/data.json';
 

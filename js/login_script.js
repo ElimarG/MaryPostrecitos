@@ -1,4 +1,4 @@
-console.log('Desafio Entregable - Fecth en el simulador de pedidos de repostería');
+console.log('Proyecto Final - Simulador de pedidos de repostería');
 
 class Users {
     constructor(userName, password) {
@@ -13,7 +13,7 @@ function defaultAccess() {
     sessionStorage.setItem('access', defaultJson);
     
     const { userName, password } = defaultAccess
-    console.log(`Login Usuario: ${userName} Contraseña: ${password}`)
+    //console.log(`Login Usuario: ${userName} Contraseña: ${password}`)
     
     let button = document.querySelector('#submit');
     button.addEventListener('click', validateUser);
